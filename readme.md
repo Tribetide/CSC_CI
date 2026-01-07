@@ -7,6 +7,12 @@ CSC:n virtuaalikonepalvelun nimi on [Pouta](https://research.csc.fi/service/cpou
 - Projektiin lisätään service (cPouta)
 - cPoutaan kirjaudutaan aiemmin luoduilla CSC-tunnuksilla
 
+#### Virtuaalikoneen asennus
+
+Kuen edelliset on tehty, voi luoda oman virtuaalikoneen [näiden ohjeiden](https://docs.csc.fi/cloud/pouta/) perusteella. Esityisesti [tämä](https://docs.csc.fi/cloud/pouta/launch-vm-from-web-gui/).
+
+## Englanniksi
+
 [Getting started with CSC services for students - Docs CSC](https://docs.csc.fi/support/tutorials/student_quick/)
 
 Follow instructions from Student Project 1-2-3. Add access to service cPouta. And follow instruction from below about cPouta on how to create your own virtual machine and how to set up ssh-access and firewall settings.
