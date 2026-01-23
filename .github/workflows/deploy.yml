@@ -1,0 +1,33 @@
+name: Deploy to CSC Pouta
+
+on:
+  push:
+    branches:
+      - main  # Tämä laukaisee putken kun "main"-haaraan tulee päivitys
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to VM via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: 22
+        script: |
+          # Tässä ovat komennot, jotka ajetaan virtuaalikoneella:
+          # Kopioidaan repositoryn index.html palvelimen kansioon
+          rm -f /var/www/html/index.html
+          echo "Vanha tiedosto poistettu, luodaan uusi..." 
+          # Koska scp on hankalampi konffata tässä yksinkertaisessa esimerkissä,
+          # käytämme yksinkertaista kikkaa: kirjoitamme sisällön suoraan.
+          # Oikeassa projektissa käytettäisiin 'scp' tai 'rsync'.
+          
+          # TÄSSÄ HARJOITUKSESSA: Teemme yksinkertaisen testin.
+          echo "<h1>Päivitys GitHubista onnistui!</h1>" > /var/www/html/index.html
