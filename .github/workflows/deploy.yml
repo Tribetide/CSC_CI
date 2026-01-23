@@ -24,8 +24,6 @@ jobs:
         source: "."
         # Mihin kopioidaan? Palvelimen web-kansioon
         target: "/var/www/html"
-        # Poistetaan git-tiedostot siirrosta, niitä ei tarvita palvelimella
-        rm: true 
 
     # VAIHE 2: Varmistetaan oikeudet (SSH) - Valinnainen mutta hyödyllinen
     # Tämä varmistaa, että vaikka siirtäisit uusia tiedostoja, ne näkyvät netissä.
