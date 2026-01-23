@@ -1,9 +1,9 @@
-name: Deploy to CSC Pouta
+name: Deploy to CSC Pouta with SCP
 
 on:
   push:
     branches:
-      - main  # Tämä laukaisee putken kun "main"-haaraan tulee päivitys
+      - main
 
 jobs:
   deploy:
@@ -13,21 +13,28 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Deploy to VM via SSH
+    # VAIHE 1: Siirretään tiedostot (SCP)
+    - name: Copy files via SCP
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        # Mitä kopioidaan? "." tarkoittaa "kaikki tässä kansiossa"
+        source: "."
+        # Mihin kopioidaan? Palvelimen web-kansioon
+        target: "/var/www/html"
+        # Poistetaan git-tiedostot siirrosta, niitä ei tarvita palvelimella
+        rm: true 
+
+    # VAIHE 2: Varmistetaan oikeudet (SSH) - Valinnainen mutta hyödyllinen
+    # Tämä varmistaa, että vaikka siirtäisit uusia tiedostoja, ne näkyvät netissä.
+    - name: Fix permissions
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
-        port: 22
         script: |
-          # Tässä ovat komennot, jotka ajetaan virtuaalikoneella:
-          # Kopioidaan repositoryn index.html palvelimen kansioon
-          rm -f /var/www/html/index.html
-          echo "Vanha tiedosto poistettu, luodaan uusi..." 
-          # Koska scp on hankalampi konffata tässä yksinkertaisessa esimerkissä,
-          # käytämme yksinkertaista kikkaa: kirjoitamme sisällön suoraan.
-          # Oikeassa projektissa käytettäisiin 'scp' tai 'rsync'.
-          
-          # TÄSSÄ HARJOITUKSESSA: Teemme yksinkertaisen testin.
-          echo "<h1>Päivitys GitHubista onnistui!</h1>" > /var/www/html/index.html
+          # Varmistetaan vielä kerran, että ubuntu-käyttäjä omistaa tiedostot
+          sudo chown -R ubuntu:ubuntu /var/www/html
