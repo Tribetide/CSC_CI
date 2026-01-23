@@ -36,3 +36,5 @@ jobs:
         script: |
           # Varmistetaan vielä kerran, että ubuntu-käyttäjä omistaa tiedostot
           sudo chown -R ubuntu:ubuntu /var/www/html
+          # Varmistetaan, että Nginx saa lukea tiedostot
+          sudo chmod -R 755 /var/www/html
