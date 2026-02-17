@@ -1,0 +1,22 @@
+# ── TEST-profiili – automaattiset testit (H2 in-memory) ──
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+  h2:
+    console:
+      enabled: false
+
+logging:
+  level:
+    com.example.events: WARN

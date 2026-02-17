@@ -1,0 +1,9 @@
+# Dockerin buildiin ei tarvita näitä
+.git
+.github
+temp-starter
+starter.zip
+target
+*.md
+.gitignore
+.gitattributes

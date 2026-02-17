@@ -1,0 +1,19 @@
+# ── PROD-profiili – tuotanto CSC cPouta (PostgreSQL docker-composessa) ──
+# Arkaluontoiset arvot tulevat ympäristömuuttujista.
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:db}:${DB_PORT:5432}/${DB_NAME:eventsdb}
+    username: ${DB_USERNAME:produser}
+    password: ${DB_PASSWORD:prodpass}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+logging:
+  level:
+    com.example.events: INFO
+    root: WARN

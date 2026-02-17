@@ -1,0 +1,40 @@
+# ── docker-compose.prod.yml – tuotantoympäristö (CSC cPouta) ──
+# Käyttää Docker Hub:ista vedettävää imagea.
+# Käyttö: docker compose -f docker-compose.prod.yml up -d
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: events-db-prod
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME:-eventsdb}
+      POSTGRES_USER: ${DB_USERNAME:-produser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-prodpass}
+    volumes:
+      - pgdata-prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-produser} -d ${DB_NAME:-eventsdb}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    image: ${DOCKER_IMAGE:-your-dockerhub-user/events-api:latest}
+    container_name: events-app-prod
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-eventsdb}
+      DB_USERNAME: ${DB_USERNAME:-produser}
+      DB_PASSWORD: ${DB_PASSWORD:-prodpass}
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata-prod:
