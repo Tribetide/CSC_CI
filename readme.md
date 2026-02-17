@@ -56,7 +56,7 @@ Sovellus noudattaa perinteistä kolmikerrosarkkitehtuuria:
 
 ## Paikallinen kehitys (Docker Desktop)
 
-> **Ohje uudelle kehittäjälle**
+> **Ohje uudelle kehittäjälle** – pääset käyntiin ilman suullista ohjausta.
 
 ### Esitiedot
 
@@ -117,8 +117,11 @@ Spring Boot tukee profiilipohjaista konfiguraatiota. Jokaiselle ympäristölle o
 ### Profiilin aktivointi
 
 ```bash
-# Komentoriviltä
+# Komentoriviltä (Linux / macOS)
 SPRING_PROFILES_ACTIVE=dev ./mvnw spring-boot:run
+
+# Komentoriviltä (Windows PowerShell)
+$env:SPRING_PROFILES_ACTIVE="dev"; ./mvnw spring-boot:run
 
 # Dockerissa (ympäristömuuttuja)
 docker run -e SPRING_PROFILES_ACTIVE=prod events-api
@@ -127,6 +130,19 @@ docker run -e SPRING_PROFILES_ACTIVE=prod events-api
 environment:
   SPRING_PROFILES_ACTIVE: dev
 ```
+
+### Profiilin aktivointi GitHub Actionsissa
+
+CI/CD-putkessa testiprofiili aktivoidaan ympäristömuuttujalla:
+
+```yaml
+- name: Run tests with test profile
+  run: ./mvnw test -B
+  env:
+    SPRING_PROFILES_ACTIVE: test
+```
+
+Tämä varmistaa, että testit käyttävät aina H2 in-memory -tietokantaa eivätkä tarvitse ulkoisia palveluita.
 
 ### Dev-profiili (`application-dev.yml`)
 
@@ -278,8 +294,8 @@ export DB_NAME=eventsdb
 export DB_USERNAME=produser
 export DB_PASSWORD=prodpass
 
-docker compose -f docker-compose.prod.yml pull
-docker compose -f docker-compose.prod.yml up -d
+sudo -E docker compose -f docker-compose.prod.yml pull
+sudo -E docker compose -f docker-compose.prod.yml up -d
 ```
 
 ---
