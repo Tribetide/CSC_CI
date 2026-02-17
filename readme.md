@@ -56,7 +56,7 @@ Sovellus noudattaa perinteistä kolmikerrosarkkitehtuuria:
 
 ## Paikallinen kehitys (Docker Desktop)
 
-> **Ohje uudelle kehittäjälle** – pääset käyntiin ilman suullista ohjausta.
+> **Ohje uudelle kehittäjälle**
 
 ### Esitiedot
 
