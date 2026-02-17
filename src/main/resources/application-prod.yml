@@ -3,9 +3,9 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST:db}:${DB_PORT:5432}/${DB_NAME:eventsdb}
-    username: ${DB_USERNAME:produser}
-    password: ${DB_PASSWORD:prodpass}
+    url: jdbc:postgresql://${DB_HOST:-db}:${DB_PORT:-5432}/${DB_NAME:-eventsdb}
+    username: ${DB_USERNAME:-produser}
+    password: ${DB_PASSWORD:-prodpass}
     driver-class-name: org.postgresql.Driver
 
   jpa:
