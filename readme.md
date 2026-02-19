@@ -56,7 +56,7 @@ Sovellus noudattaa perinteistä kolmikerrosarkkitehtuuria:
 
 ## Paikallinen kehitys (Docker Desktop)
 
-> **Ohje uudelle kehittäjälle** – pääset käyntiin ilman suullista ohjausta.
+> **Ohje uudelle kehittäjälle**
 
 ### Esitiedot
 
@@ -67,8 +67,8 @@ Sovellus noudattaa perinteistä kolmikerrosarkkitehtuuria:
 
 ```bash
 # 1. Kloonaa repositorio
-git clone https://github.com/<käyttäjä>/csc-ci.git
-cd csc-ci
+git clone https://github.com/Tribetide/CSC_CI.git
+cd CSC_CI
 
 # 2. Käynnistä ympäristö
 docker compose up --build
